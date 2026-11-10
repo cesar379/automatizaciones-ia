@@ -1,0 +1,31 @@
+# Datos reales: nunca en el repositorio
+datos/
+resultados/
+*.pdf
+*.jpg
+*.jpeg
+*.png
+*.xlsx
+*.xls
+*.csv
+*.n43
+
+# Configuración y secretos por cliente
+clientes/*
+!clientes/_plantilla/
+!clientes/_plantilla/**
+# Si alguien renombra la plantilla en su sitio, la configuración real no se sube
+clientes/_plantilla/*.yaml
+clientes/_plantilla/*.yml
+!clientes/_plantilla/config.example.yaml
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Sistema
+.DS_Store

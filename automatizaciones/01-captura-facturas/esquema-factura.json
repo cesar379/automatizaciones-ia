@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Documento de proveedor",
+  "type": "object",
+  "required": ["tipo_documento", "proveedor", "numero", "fecha", "desglose_iva", "total"],
+  "properties": {
+    "tipo_documento": { "enum": ["factura", "rectificativa", "presupuesto", "albaran", "otro"] },
+    "proveedor": {
+      "type": "object",
+      "required": ["origen"],
+      "properties": {
+        "nombre": { "type": ["string", "null"] },
+        "nif": { "type": ["string", "null"] },
+        "origen": { "enum": ["texto", "imagen", "lista_proveedores", "nombre_archivo", "formato", "desconocido"] }
+      }
+    },
+    "numero": { "type": "string" },
+    "fecha": { "type": "string", "format": "date" },
+    "factura_rectificada": { "type": ["string", "null"] },
+    "moneda": { "type": "string", "default": "EUR" },
+    "desglose_iva": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["tipo", "base", "cuota"],
+        "properties": {
+          "tipo": { "type": "number" },
+          "base": { "type": "number" },
+          "cuota": { "type": "number" }
+        }
+      }
+    },
+    "retencion": { "type": "number", "default": 0 },
+    "total": { "type": "number" },
+    "vencimientos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["fecha", "importe"],
+        "properties": {
+          "fecha": { "type": "string", "format": "date" },
+          "importe": { "type": "number" }
+        }
+      }
+    },
+    "forma_pago": { "type": ["string", "null"] },
+    "lineas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["descripcion", "importe"],
+        "properties": {
+          "descripcion": { "type": "string" },
+          "referencia": { "type": ["string", "null"] },
+          "cantidad": { "type": ["number", "null"] },
+          "precio": { "type": ["number", "null"] },
+          "tipo_iva": { "type": ["number", "null"] },
+          "importe": { "type": "number" },
+          "iva_incluido": { "type": "boolean", "default": false },
+          "destino": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "avisos": { "type": "array", "items": { "type": "string" } }
+  }
+}

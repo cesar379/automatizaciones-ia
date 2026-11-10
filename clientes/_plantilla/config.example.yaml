@@ -1,0 +1,59 @@
+# Copia esta carpeta como clientes/<empresa>/. Esa copia no se versiona.
+# Guarda las credenciales en un gestor de secretos, nunca aquí.
+empresa:
+  nombre: "Empresa de ejemplo, S.L."
+  nif: "B00000000"
+
+erp:
+  sistema: holded        # holded | sage | otro
+  via: archivo           # api | archivo
+
+documentos:
+  origen: carpeta        # carpeta | correo
+  ubicacion: "Pendiente"
+
+revision:
+  responsable: "Pendiente"
+  aprobacion_obligatoria: true
+
+categorias:
+  - Producto
+  - Combustible
+  - Comisiones
+  - Material de oficina
+
+# 02 · Revisión de compras (solo lectura del ERP). La clave va en HOLDED_API_KEY_<EMPRESA>
+# o en clientes/<empresa>/.env, nunca aquí.
+revision_compras:
+  nif_propio: "B00000000"        # NIF de la empresa; si se deja vacío se usa empresa.nif
+  umbral_subida_precio: 5        # % de subida del precio neto unitario que genera aviso
+  fecha_desde: 2026-01-01        # revisar compras desde esta fecha (AAAA-MM-DD); --desde la sustituye
+  api_holded: v2                 # v2 (recomendada, token con permisos de solo lectura) | v1 (antigua)
+  zona_horaria: Europe/Madrid    # Atlantic/Canary en Canarias; sirve para las fechas de la API v1
+  # Ajusta estas palabras al sector: en un vivero «abono» es un producto, en hostelería
+  # «devolución» aparece en las líneas de envases.
+  palabras_abono:                # texto que indica que falta un abono o devolución
+    - abono
+    - devolver
+    - devolucion
+    - no se hace
+    - anular
+    - anulada
+    - erroneo
+    - error
+    - tienen que hacer
+  palabras_abono_solo_cabecera:  # se buscan solo en la descripción y las notas, no en las líneas
+    - abono
+  palabras_presupuesto:          # presupuesto registrado como compra: en el número o al inicio de la descripción
+    - presupuesto
+    - proforma
+    - oferta
+  conceptos_precio_variable:     # líneas cuyo importe cambia en cada factura: no avisan de subida de precio
+    - porte
+    - transporte
+    - envio
+    - mensajeria
+    - energia
+    - electricidad
+    - consumo
+    - suministro
